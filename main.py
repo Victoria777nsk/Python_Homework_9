@@ -15,7 +15,7 @@ for obl in soup.find_all('span', id = 'weather-now-icon'):
 for timew in soup.find_all('div', class_ = 'weather-now-info'):
     timew = timew.text[6:-7]                  # Цикл для времени и даты прогноза, убираем лишние символы (6 в начале и 7 с конца).
 
-for dr in soup.find_all('div', id = 'weather-now-description'):
+for dr in soup.find_all('div', id = 'weather-now-description'):   # Цикл для давления, влажности, направления и скорости ветра..
     line = dr.text
     last_index = 0
     itog = []
@@ -27,8 +27,12 @@ for dr in soup.find_all('div', id = 'weather-now-description'):
     itog.append(line[-4])
     dr = ' '.join(itog[:-5])
 
+# Присваиваем переменной send_tg все полученные данные о погоде:
+
 send_tg = 'Погода в Новосибирске: ' + '\n' + temp + ' ' + obl + '\n' + dr + '\n' + 'Данные на: ' + timew
 print(send_tg)
 
+# Присваиваем токен в переменную bot и бот отправляет сообщение с данными о погоде в канал в телеграме:
+
 bot = '5690611072:AAHQvxwHqX8eCEeYkeqWi9AxCFS_R_1dAf0'
-requests.get('https://api.telegram.org/bot{}/sendMessage'.format(bot), params = dict(chat_id = '1001650196036', text = send_tg))
+requests.get('https://api.telegram.org/bot{}/sendMessage'.format(bot), params = dict(chat_id = '-1001650196036', text = send_tg))
